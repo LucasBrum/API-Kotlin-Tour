@@ -6,26 +6,38 @@ import org.springframework.web.bind.annotation.*
 import java.util.concurrent.ConcurrentHashMap
 
 @RestController
+@RequestMapping("/promocoes")
 class PromocaoController {
 
     @Autowired
     lateinit var promocoes: ConcurrentHashMap<Long, Promocao>
 
-    @RequestMapping(value = ["/sayHello"], method = arrayOf(RequestMethod.GET))
-    fun sayHello(): String {
-        return "Hello World"
-    }
-
-    @RequestMapping(value = ["/promocoes/{id}"], method = arrayOf(RequestMethod.GET))
+    @GetMapping("/{id}")
     fun getById(@PathVariable id: Long) = promocoes[id]
 
-    @RequestMapping(value = ["/promocoes"], method = arrayOf(RequestMethod.POST))
+    @PostMapping
     fun create(@RequestBody promocao: Promocao) {
         promocoes[promocao.id] = promocao
     }
 
-    @RequestMapping(value = ["/promocoes/{id}"], method = arrayOf(RequestMethod.DELETE))
+    @DeleteMapping("/{id}")
     fun delete(@PathVariable id: Long) {
         promocoes.remove(id)
     }
+
+    @PutMapping("/{id}")
+    fun update(@PathVariable id: Long, @RequestBody promocao: Promocao) {
+        promocoes.remove(promocao.id)
+        promocoes[promocao.id] = promocao
+    }
+
+    @GetMapping
+    fun getAll(@RequestParam(required = false, defaultValue = "") localFilter: String) =
+        promocoes.filter {
+            it.value.local.contains(localFilter, true)
+        }.map (Map.Entry<Long, Promocao>::value).toList()
+
+
+
+
 }
