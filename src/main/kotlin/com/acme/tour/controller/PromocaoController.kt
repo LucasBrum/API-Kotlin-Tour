@@ -1,12 +1,14 @@
 package com.acme.tour.controller
 
 import com.acme.tour.model.Promocao
+import com.acme.tour.model.RespostaJson
 import com.acme.tour.service.PromocaoService
 import org.apache.coyote.Response
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.util.*
 
 
 @RestController
@@ -24,9 +26,10 @@ class PromocaoController {
     }
 
     @PostMapping
-    fun create(@RequestBody promocao: Promocao): ResponseEntity<Unit> {
+    fun create(@RequestBody promocao: Promocao): ResponseEntity<RespostaJson> {
         this.promocaoService.create(promocao)
-        return ResponseEntity(Unit, HttpStatus.CREATED)
+        val respostaJson = RespostaJson("OK", Date())
+        return ResponseEntity(respostaJson, HttpStatus.CREATED)
     }
 
     @DeleteMapping("/{id}")
@@ -41,7 +44,7 @@ class PromocaoController {
     }
 
     @PutMapping("/{id}")
-    fun update(@PathVariable id: Long, @RequestBody promocao: Promocao): ResponseEntity<Unit> {
+    fun update(@PathVariable id: Long, @RequestBody promocao: Promocao): ResponseEntity<Unit> { //Unit é uma classe do Kotlin para retornar vazio
         this.promocaoService.update(id, promocao)
         var status = HttpStatus.NOT_FOUND
         if (this.promocaoService.getById(id) != null) {
