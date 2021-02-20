@@ -1,6 +1,7 @@
 package com.acme.tour.controller
 
 import com.acme.tour.exception.PromocaoNotFoundException
+import com.acme.tour.model.ErrorMessage
 import com.acme.tour.model.Promocao
 import com.acme.tour.model.RespostaJson
 import com.acme.tour.service.PromocaoService
@@ -20,11 +21,13 @@ class PromocaoController {
     lateinit var promocaoService: PromocaoService
 
     @GetMapping("/{id}")
-    fun getById(@PathVariable id: Long): ResponseEntity<Promocao?> {
-        var promocao = this.promocaoService.getById(id) ?:
-            throw PromocaoNotFoundException("Promocao ${id} nao localizada.")
+    fun getById(@PathVariable id: Long): ResponseEntity<Any> {
+        val promocao = this.promocaoService.getById(id)
 
-        return ResponseEntity(promocao, HttpStatus.OK)
+        return if(promocao != null)
+            return ResponseEntity(promocao, HttpStatus.OK)
+        else
+            return ResponseEntity(ErrorMessage("Promocao nao localizada", "Promocao ${id} nao localizada"), HttpStatus.NOT_FOUND)
     }
 
     @PostMapping
