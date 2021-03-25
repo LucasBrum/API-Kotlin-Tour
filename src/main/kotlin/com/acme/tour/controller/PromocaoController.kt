@@ -68,4 +68,8 @@ class PromocaoController {
         return ResponseEntity(listPromocoes, status)
     }
 
+    @GetMapping("/count")
+    fun count(): ResponseEntity<Map<String,Long>> =
+        ResponseEntity.ok().body(mapOf("count" to this.promocaoService.count()))
+
 }

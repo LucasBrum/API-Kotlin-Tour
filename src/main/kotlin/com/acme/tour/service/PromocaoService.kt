@@ -9,4 +9,5 @@ interface PromocaoService {
     fun update(id: Long, promocao: Promocao)
     fun searchByLocal(localFilter: String): List<Promocao>
     fun getAll(): List<Promocao>
+    fun count(): Long
 }

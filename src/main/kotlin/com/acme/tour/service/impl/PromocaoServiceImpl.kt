@@ -23,7 +23,7 @@ class PromocaoServiceImpl: PromocaoService {
     }
 
     override fun delete(id: Long) {
-        this.promocaoRepository.delete(Promocao(id = id))
+        this.promocaoRepository.deleteById(id)
     }
 
     override fun update(id: Long, promocao: Promocao) {
@@ -34,7 +34,10 @@ class PromocaoServiceImpl: PromocaoService {
         listOf()
 
     override fun getAll(): List<Promocao> {
-        return this.promocaoRepository.findAll()
+        return this.promocaoRepository.findAll().toList()
     }
+
+    override fun count(): Long =
+        this.promocaoRepository.count()
 
 }
