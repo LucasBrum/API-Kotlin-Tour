@@ -8,6 +8,6 @@ interface PromocaoService {
     fun delete (id: Long)
     fun update(id: Long, promocao: Promocao)
     fun searchByLocal(localFilter: String): List<Promocao>
-    fun getAll(): List<Promocao>
+    fun getAll(start: Int, size: Int): List<Promocao>
     fun count(): Long
 }
