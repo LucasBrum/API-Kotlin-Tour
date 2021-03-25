@@ -73,4 +73,7 @@ class PromocaoController {
     fun count(): ResponseEntity<Map<String,Long>> =
         ResponseEntity.ok().body(mapOf("count" to this.promocaoService.count()))
 
+    @GetMapping("/ordenados")
+    fun ordenados() = this.promocaoService.getAllSortedByLocal()
+
 }

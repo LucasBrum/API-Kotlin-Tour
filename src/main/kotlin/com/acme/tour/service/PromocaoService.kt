@@ -10,4 +10,5 @@ interface PromocaoService {
     fun searchByLocal(localFilter: String): List<Promocao>
     fun getAll(start: Int, size: Int): List<Promocao>
     fun count(): Long
+    fun getAllSortedByLocal(): List<Promocao>
 }
