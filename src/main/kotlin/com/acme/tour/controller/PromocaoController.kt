@@ -20,8 +20,8 @@ class PromocaoController {
     @Autowired
     lateinit var promocaoService: PromocaoService
 
-    @GetMapping("/menorQue9000")
-    fun getAllMenores() = this.promocaoService.getALlByPrecoMenorQue9000()
+    @GetMapping("/menorQue")
+    fun getAllMenores() = this.promocaoService.getAllByPrecoMenorQue()
 
 
     @GetMapping("/{id}")
