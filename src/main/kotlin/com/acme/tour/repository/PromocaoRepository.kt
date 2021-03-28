@@ -11,10 +11,10 @@ import javax.transaction.Transactional
 
 interface PromocaoRepository: PagingAndSortingRepository<Promocao, Long> {
 
-    @Query(value = "SELECT p FROM Promocao p WHERE p.preco <= :preco and p.quantidade_dias > :dias")
+    @Query(value = "SELECT p FROM Promocao p WHERE p.preco <= :preco and p.qtdDias > :dias")
     fun findByPrecoMenorque(@Param("preco") preco: Double, @Param("dias") quantidadeDias: Int): List<Promocao>
 
-    @Query(value = "SELECT p.quantidade_dias p WHERE p.local IN :names")
+    @Query(value = "SELECT p.qtdDias FROM Promocao p WHERE p.local IN :names")
     fun findByLocalInList(@Param("names") names: List<String>): List<Promocao>
 
     @Modifying

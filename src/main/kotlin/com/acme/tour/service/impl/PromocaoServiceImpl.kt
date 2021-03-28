@@ -47,8 +47,8 @@ class PromocaoServiceImpl: PromocaoService {
     override fun getAllSortedByLocal(): List<Promocao> =
         this.promocaoRepository.findAll(Sort.by("local").ascending()).toList()
 
-    override fun getAllByPrecoMenorQue(): List<Promocao> {
-        return this.promocaoRepository.findByPrecoMenorque()
+    override fun getAllByPrecoMenorQue(preco: Double, quantidadeDias: Int): List<Promocao> {
+        return this.promocaoRepository.findByPrecoMenorque(preco, quantidadeDias)
     }
 
 

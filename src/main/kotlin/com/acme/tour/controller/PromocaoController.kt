@@ -20,15 +20,15 @@ class PromocaoController {
     @Autowired
     lateinit var promocaoService: PromocaoService
 
-    @GetMapping("/menorQue")
-    fun getAllMenores() = this.promocaoService.getAllByPrecoMenorQue()
+    @GetMapping("/menorQue{preco}/{quantidadeDias}")
+    fun getAllMenores(@PathVariable preco: Double, @PathVariable quantidadeDias: Int) = this.promocaoService.getAllByPrecoMenorQue(preco, quantidadeDias)
 
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): ResponseEntity<Any> {
         val promocao = this.promocaoService.getById(id)
 
-        return if(promocao != null)
+        return if (promocao != null)
             return ResponseEntity(promocao, HttpStatus.OK)
         else
             return ResponseEntity(ErrorMessage("Promocao nao localizada", "Promocao ${id} nao localizada"), HttpStatus.NOT_FOUND)
