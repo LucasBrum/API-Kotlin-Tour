@@ -43,7 +43,6 @@ class PromocaoController {
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: Long): ResponseEntity<Unit> {
-        this.promocaoService.delete(id)
         var status = HttpStatus.NOT_FOUND
         if (this.promocaoService.getById(id) != null) {
             status = HttpStatus.ACCEPTED

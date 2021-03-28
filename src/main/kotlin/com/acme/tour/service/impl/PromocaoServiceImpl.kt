@@ -4,6 +4,8 @@ import com.acme.tour.model.Promocao
 import com.acme.tour.repository.PromocaoRepository
 import com.acme.tour.service.PromocaoService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.context.annotation.Bean
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -21,14 +23,17 @@ class PromocaoServiceImpl: PromocaoService {
         return promocaoRepository.findById(id).orElseGet(null)
     }
 
+    @CacheEvict("promocoes", allEntries = true)
     override fun create(promocao: Promocao) {
         this.promocaoRepository.save(promocao)
     }
 
+    @CacheEvict("promocoes", allEntries = true)
     override fun delete(id: Long) {
         this.promocaoRepository.deleteById(id)
     }
 
+    @CacheEvict("promocoes", allEntries = true)
     override fun update(id: Long, promocao: Promocao) {
         create(promocao)
     }
@@ -36,6 +41,7 @@ class PromocaoServiceImpl: PromocaoService {
     override fun searchByLocal(localFilter: String): List<Promocao> =
         listOf()
 
+    @Cacheable("promocoes")
     override fun getAll(start: Int, size: Int): List<Promocao> {
         val pages: Pageable = PageRequest.of(start, size, Sort.by("local").ascending())
         return this.promocaoRepository.findAll(pages).toList()
