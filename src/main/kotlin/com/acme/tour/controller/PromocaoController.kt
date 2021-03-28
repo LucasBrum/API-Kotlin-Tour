@@ -20,6 +20,10 @@ class PromocaoController {
     @Autowired
     lateinit var promocaoService: PromocaoService
 
+    @GetMapping("/menorQue9000")
+    fun getAllMenores() = this.promocaoService.getALlByPrecoMenorQue9000()
+
+
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): ResponseEntity<Any> {
         val promocao = this.promocaoService.getById(id)
